@@ -9,6 +9,7 @@ class NoteMap;
 #include <QStringList>
 
 #include "note.h"
+#include "segment.h"
 
 class NoteMap : public QObject
 {
@@ -20,7 +21,8 @@ public:
 
 protected:
 
-    QList<QList<Note>> segments;
+    QList<Segment> segments;
+
     QHash<QString, QString> mapProperties;
     QStringList listProperties;
 

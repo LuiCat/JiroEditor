@@ -22,7 +22,8 @@ SOURCES += \
 	notify.cpp \
     jiroediter.cpp \
     notemap.cpp \
-    mapstate.cpp
+    mapstate.cpp \
+    segment.cpp
 
 HEADERS  += \
     qoggvorbis.h \
@@ -34,7 +35,9 @@ HEADERS  += \
     jiroediter.h \
     notemap.h \
     note.h \
-    mapstate.h
+    mapstate.h \
+    segment.h \
+    event.h
 
 RESOURCES += \
 	resource.qrc

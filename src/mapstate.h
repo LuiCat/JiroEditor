@@ -12,12 +12,9 @@ class MapState
 {
 public:
 
-    explicit MapState(QObject *parent = 0);
-
     NoteMap* map;
 
     QList<QList<Note>>::Iterator iterSegment;
-    QList<Note>::Iterator iterNote;
 
     double offset;
     double beatOffset;
@@ -25,7 +22,7 @@ public:
     int segmentCount;
 
     bool editable;
-    int num;
+    int numNote;
 
     double bpm;
     double scroll;
@@ -35,6 +32,11 @@ public:
 
     bool isGGT;
     bool barlineHidden;
+
+
+    MapState(double _offset=0.0, double _bpm=120.0);
+
+
 
 
 };
