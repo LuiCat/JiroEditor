@@ -20,7 +20,9 @@ SOURCES += \
 	soundcore.cpp \
 	gltextureloader.cpp \
 	notify.cpp \
-    jiroediter.cpp
+    jiroediter.cpp \
+    notemap.cpp \
+    mapstate.cpp
 
 HEADERS  += \
     qoggvorbis.h \
@@ -29,7 +31,10 @@ HEADERS  += \
 	soundcore.h \
 	gltextureloader.h \
     notify.h \
-    jiroediter.h
+    jiroediter.h \
+    notemap.h \
+    note.h \
+    mapstate.h
 
 RESOURCES += \
 	resource.qrc
