@@ -3,9 +3,10 @@
 MapState::MapState(double _offset, double _bpm)
     :offset(_offset)
     ,beatOffset(0)
-    ,segmentCount(0)
     ,editable(true)
+    ,segmentCount(0)
     ,numNote(0)
+    ,segmentDiv(1)
     ,bpm(_bpm)
     ,scroll(1.0)
     ,measureDiv(4)
@@ -16,19 +17,18 @@ MapState::MapState(double _offset, double _bpm)
 
 }
 
-void Segment::processEvent(const Event *event, int deltaNum) const
+double MapState::getCurrentTime() const
 {
-    if(!editable)return;
-    num+=deltaNum;
-    processEvent(event, calcOffset_segment((double)deltaNum/segmentDiv));
-    editable=true;
+    return offset;
 }
 
-void Segment::processEvent(const Event *event, double deltaOffset) const
+double MapState::getCurrentBeat() const
 {
-    offset+=deltaOffset;
-    beatOffset+=calcBeatOffset(deltaOffset);
-    editable=false;
+    return beatOffset;
+}
+
+void MapState::processEvent(const Event *event)
+{
     if(event==0)
         return;
     switch(event->eventType)
@@ -36,33 +36,51 @@ void Segment::processEvent(const Event *event, double deltaOffset) const
     case Event::measure:
         if(event->num==0)
         {
-            state->measureDiv=event->parameter_i_2;
-            state->measureNum=event->parameter_i_1;
+            measureDiv=event->parameter_i_2;
+            measureNum=event->parameter_i_1;
         }
         break;
     case Event::scroll:
-        state->scroll=event->parameter_d;
+        scroll=event->parameter_d;
         break;
     case Event::bpmchange:
-        state->bpm=event->parameter_d;
+        bpm=event->parameter_d;
         break;
     case Event::delay:
-        state->offset+=event->parameter_d;
+        offset+=event->parameter_d;
         break;
     case Event::gogostart:
-        state->isGGT=true;
+        isGGT=true;
         break;
     case Event::gogoend:
-        state->isGGT=false;
+        isGGT=false;
         break;
     case Event::barlineoff:
-        state->barlineHidden=true;
+        barlineHidden=true;
         break;
     case Event::barlineon:
-        state->barlineHidden=false;
+        barlineHidden=false;
         break;
     default:
         break;
     }
+}
+
+void MapState::processEvent(const Event *event, int deltaNum)
+{
+    if(!editable)return;
+    numNote+=deltaNum;
+    double deltaSegment=(double)deltaNum/segmentDiv;
+    offset+=calcOffset_segment(deltaSegment);
+    beatOffset+=getTotalBeats()*deltaSegment;
+    processEvent(event);
+}
+
+void MapState::processEvent(const Event *event, double deltaOffset)
+{
+    offset+=deltaOffset;
+    beatOffset+=calcBeatOffset(deltaOffset);
+    editable=false;
+    processEvent(event);
 }
 

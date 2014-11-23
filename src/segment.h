@@ -3,11 +3,13 @@ class Segment;
 #ifndef SEGMENT_H
 #define SEGMENT_H
 
-#include "event.h"
-#include "mapstate.h"
-#include "note.h"
-
 #include <QList>
+
+#include "notemapprivate.h"
+
+#include "mapstate.h"
+#include "event.h"
+#include "note.h"
 
 class Segment
 {
@@ -38,6 +40,8 @@ public:
 
     MapState getEndState() const;
 
+    int incStateNoteNum(MapState* state, int deltaNum=1) const;
+
     void getNoteEventInfo(QList<NoteInfo>& noteList, QList<EventInfo>& eventList, const MapState& endState=MapState());
 
 protected:
@@ -48,8 +52,6 @@ protected:
     QList<Event> events;
 
     MapState beginState;
-
-    int incStateNoteNum(MapState* state, int deltaNum=1) const;
 
 };
 

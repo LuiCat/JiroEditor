@@ -83,7 +83,32 @@ void Segment::addEvent(const Event& event)
     events.insert(iter, event);
 }
 
-int Segment::incStateNoteNum(MapState *state, int deltaNum) const
+void Segment::setBeginState(const MapState &state)
+{
+    beginState=state;
+}
+
+const MapState &Segment::getBeginState() const
+{
+    return beginState;
+}
+
+MapState Segment::getNoteBeginState() const
+{
+    return MapState();
+}
+
+MapState Segment::getEndState() const
+{
+    return MapState();
+}
+
+void Segment::getNoteEventInfo(QList<NoteInfo> &noteList, QList<EventInfo> &eventList, const MapState &endState)
 {
 
+}
+
+int Segment::incStateNoteNum(MapState *state, int deltaNum) const
+{
+    return 0;
 }
