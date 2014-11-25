@@ -38,7 +38,7 @@ HEADERS  += \
     mapstate.h \
     segment.h \
     event.h \
-    notemapprivate.h
+    notemapdef.h
 
 RESOURCES += \
 	resource.qrc

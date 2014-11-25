@@ -3,7 +3,7 @@
 
 #include <QList>
 
-#include "notemapprivate.h"
+#include "notemapdef.h"
 
 #include "event.h"
 #include "note.h"
@@ -50,6 +50,13 @@ public:
     {
         return (double)measureNum*4/measureDiv;
     }
+
+
+    void nextSegment();
+    void prevSegment();
+
+    void incNoteNum(int deltaNum);
+    void decNoteNum(int deltaNum);
 
 protected:
 

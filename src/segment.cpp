@@ -1,5 +1,7 @@
 #include "segment.h"
 
+
+
 Segment::Segment()
 {
     clear();
@@ -67,7 +69,24 @@ void Segment::appendEvent(const Event& event)
     events.append(event);
 }
 
-void Segment::addNote(const Note& note)
+void Segment::insertNote(MapState &state, Note::NoteType type)
+{
+    if(!state.editable||state.numNote<0||state.numNote>=)
+        return;
+
+    Note note;
+    note.noteType=type;
+    note.num=state.numNote;
+
+
+}
+
+void Segment::insertEvent(MapState &state, Note::NoteType type)
+{
+
+}
+
+void Segment::insertNote(const Note& note)
 {
     notes.removeOne(note);
     if(note.noteType==Note::none)return;
@@ -76,7 +95,7 @@ void Segment::addNote(const Note& note)
     notes.insert(iter, note);
 }
 
-void Segment::addEvent(const Event& event)
+void Segment::insertEvent(const Event& event)
 {
     IEvent iter=events.begin();
     while(iter!=events.end() && !(event<*iter))++iter;
@@ -95,20 +114,48 @@ const MapState &Segment::getBeginState() const
 
 MapState Segment::getNoteBeginState() const
 {
-    return MapState();
+    MapState state=segmentState;
+    int prevNum=0;
+    for(ICEvent iter=events.cbegin(); iter!=events.cend() && iter->num<=0; ++iter)
+    {
+        state.processEvent(&*iter, iter->num-prevNum);
+        prevNum=iter->num;
+    }
+    return state;
 }
 
 MapState Segment::getEndState() const
 {
-    return MapState();
+    MapState state=segmentState;
+    int prevNum=0;
+
+    for(IEvent iter=events.begin(); iter!=events.end(); ++iter)
+    {
+        state.processEvent(&state, &*iter, iter->num-prevNum);
+        prevNum=iter->num;
+    }
+
+    state.processEvent(&state, 0, segmentDiv-prevNum);
+
+    return state;
+}
+
+void Segment::findNearestState(MapState &state, bool front)
+{
+
+}
+
+int Segment::incStateNoteNum(MapState &state, int deltaNum)
+{
+    return 0;
+}
+
+void Segment::getNoteEventInfo(QList<NoteInfo> &noteList, QList<EventInfo> &eventList)
+{
+
 }
 
 void Segment::getNoteEventInfo(QList<NoteInfo> &noteList, QList<EventInfo> &eventList, const MapState &endState)
 {
 
-}
-
-int Segment::incStateNoteNum(MapState *state, int deltaNum) const
-{
-    return 0;
 }

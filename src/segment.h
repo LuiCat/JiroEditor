@@ -1,11 +1,9 @@
-class Segment;
-
 #ifndef SEGMENT_H
 #define SEGMENT_H
 
 #include <QList>
 
-#include "notemapprivate.h"
+#include "notemapdef.h"
 
 #include "mapstate.h"
 #include "event.h"
@@ -31,18 +29,23 @@ public:
     void appendNote(const Note& note);
     void appendEvent(const Event& event);
 
-    void addNote(const Note& note);
-    void addEvent(const Event& event);
+    void insertNote(const Note& note);
+    void insertEvent(const Event& event);
+
+    void insertNote(MapState& state, Note::NoteType type);
+    void insertEvent(MapState& state, Note::NoteType type);
 
     void setBeginState(const MapState& state);
     const MapState& getBeginState() const;
     MapState getNoteBeginState() const;
-
     MapState getEndState() const;
 
-    int incStateNoteNum(MapState* state, int deltaNum=1) const;
+    void findNearestState(MapState& state, bool front);
+    int incStateNoteNum(MapState& state, int deltaNum);
+    int decStateNoteNum(MapState& state, int deltaNum);
 
-    void getNoteEventInfo(QList<NoteInfo>& noteList, QList<EventInfo>& eventList, const MapState& endState=MapState());
+    void getNoteEventInfo(QList<NoteInfo>& noteList, QList<EventInfo>& eventList);
+    void getNoteEventInfo(QList<NoteInfo>& noteList, QList<EventInfo>& eventList, const MapState& endState);
 
 protected:
 

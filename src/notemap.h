@@ -1,5 +1,3 @@
-class NoteMap;
-
 #ifndef NOTEMAP_H
 #define NOTEMAP_H
 
@@ -8,7 +6,7 @@ class NoteMap;
 #include <QHash>
 #include <QStringList>
 
-#include "notemapprivate.h"
+#include "notemapdef.h"
 
 #include "note.h"
 #include "segment.h"
