@@ -4,16 +4,18 @@
 #include <QString>
 #include <QTextStream>
 
-struct Event
+#include "notemapdef.h"
+
+class Event
 {
-    int num;
-    enum EventType {unknown, bpmchange, delay,
-                    gogostart, gogoend, measure, scroll,
-                    barlineon, barlineoff }
-               eventType;
-    int parameter_i_1, parameter_i_2;
-    double parameter_d;
-    char parameter_c;
+public:
+
+    friend class NoteMap;
+    friend class MapState;
+
+    enum EventType {unknown, start, end, hbscroll,
+                    bpmchange, delay, measure, scroll,
+                    gogostart, gogoend, barlineon, barlineoff};
 
     inline bool operator<(const Event& event) const
     {
@@ -28,37 +30,23 @@ struct Event
         return num>event.num;
     }
 
-    inline QString getEventString()
-    {
-        QString buf="";
-        QTextStream str(&buf);
-        switch(eventType){
-        case Event::bpmchange:
-            str<<"#BPMCHANGE "<<parameter_d;
-            break;
-        case Event::gogostart:
-            str<<"#GOGOSTART";
-            break;
-        case Event::gogoend:
-            str<<"#GOGOEND";
-            break;
-        case Event::measure:
-            str<<"#MEASURE "<<parameter_i_1<<"/"<<parameter_i_2;
-            break;
-        case Event::scroll:
-            str<<"#SCROLL "<<parameter_d;
-            break;
-        case Event::barlineon:
-            str<<"#BARLINEON";
-            break;
-        case Event::barlineoff:
-            str<<"#BARLINEOFF";
-            break;
-        default:
-            break;
-        }
-        return buf;
-    }
+    Event(int num=0);
+    Event(QString str, int num=0);
+
+    void setEventString(QString str);
+    QString getEventString() const;
+    QString getReformedEventString() const;
+
+    EventType getEventType();
+
+protected:
+
+    int num;
+    QString eventString;
+    EventType eventType;
+    int parameter_i_1, parameter_i_2;
+    double parameter_d;
+    char parameter_c;
 
 };
 

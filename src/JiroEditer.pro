@@ -23,7 +23,9 @@ SOURCES += \
     jiroediter.cpp \
     notemap.cpp \
     mapstate.cpp \
-    segment.cpp
+    segment.cpp \
+    event.cpp \
+    note.cpp
 
 HEADERS  += \
     qoggvorbis.h \
